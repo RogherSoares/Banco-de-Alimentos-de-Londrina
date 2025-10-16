@@ -52,6 +52,61 @@
         </div>
     </nav>
 
+    <div class="container mt-5">
+        <h2><img src="https://img.icons8.com/ios-filled/50/000000/charity.png" alt="Ícone Instituição" /> Cadastro de
+            Instituição</h2>
+        <p>Registre as informações da instituição que será beneficiada.</p>
+
+        <form id="formInstituicao" class="mt-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <label for="razaoSocial" class="form-label">Razão Social</label>
+                        <input type="text" class="form-control" id="razaoSocial" name="razaoSocial" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input type="text" class="form-control" id="cnpj" name="cnpj" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="responsavel" class="form-label">Nome do Responsável</label>
+                <input type="text" class="form-control" id="responsavel" name="responsavel">
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="telefone" class="form-label">Telefone</label>
+                        <input type="tel" class="form-control" id="telefone" name="telefone">
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="endereco" class="form-label">Endereço Completo</label>
+                <input type="text" class="form-control" id="endereco" name="endereco">
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-secondary me-2">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar Cadastro</button>
+            </div>
+        </form>
+    </div>
+
     <footer class="bg-dark text-white text-center p-3 mt-auto">
         <p class="mb-0">&copy; 2025 Sistema Banco de Alimentos. Todos os direitos reservados.</p>
     </footer>
