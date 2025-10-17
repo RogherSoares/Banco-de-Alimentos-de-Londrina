@@ -15,8 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <i class="bi bi-bank"></i>
-                Banco de Alimentos
+                <img src="assets/img/logo.png" alt="Logo Sesc Mesa Brasil" height="45">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +32,8 @@
                             Cadastros
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="cadastro-doador.html">Cadastrar Doador</a></li>
-                            <li><a class="dropdown-item" href="cadastro-instituicao.html">Cadastrar Instituição</a></li>
+                            <li><a class="dropdown-item" href="cadastro-doador.html">Cadastrar Doador/Parceiro</a></li>
+                            <li><a class="dropdown-item" href="cadastro-instituicao.html">Cadastrar Instituição Social</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -51,104 +50,91 @@
         </div>
     </nav>
 
-    <main>
-        <div class="container mt-5">
-            <h2><img src="https://img.icons8.com/ios-filled/50/000000/donation.png" alt="Ícone Doação" /> Registrar Nova
-                Doação</h2>
-            <p>Selecione o doador e adicione os itens recebidos.</p>
+    <main class="container mt-5">
+        <h2><i class="bi bi-box2-heart-fill"></i> Registrar Nova Coleta/Doação</h2>
+        <p>Selecione o parceiro e adicione os itens coletados.</p>
 
-            <form id="formDoacao" class="mt-4">
-                <fieldset class="border p-3 mb-4">
-                    <legend class="float-none w-auto px-2">Informações Gerais</legend>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <label for="doador" class="form-label">Selecione o Doador</label>
-                            <select class="form-select" id="doador" name="id_doador" required>
-                                <option value="">Carregando doadores...</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="dataDoacao" class="form-label">Data da Doação</label>
-                            <input type="date" class="form-control" id="dataDoacao" name="data_doacao" required>
-                        </div>
+        <form id="formDoacao" class="mt-4">
+            <fieldset class="border p-3 mb-4">
+                <legend class="float-none w-auto px-2">Informações Gerais</legend>
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="doador" class="form-label">Selecione o Parceiro (Doador)</label>
+                        <select class="form-select" id="doador" name="id_doador" required>
+                            <option value="">Carregando parceiros...</option>
+                        </select>
                     </div>
-                    <div class="mt-3">
-                        <label for="observacoes" class="form-label">Observações (opcional)</label>
-                        <textarea class="form-control" id="observacoes" name="observacoes" rows="2"></textarea>
+                    <div class="col-md-4">
+                        <label for="dataDoacao" class="form-label">Data da Coleta</label>
+                        <input type="date" class="form-control" id="dataDoacao" name="data_doacao" required>
                     </div>
-                </fieldset>
-
-                <fieldset class="border p-3">
-                    <legend class="float-none w-auto px-2">Itens da Doação</legend>
-
-                    <div id="listaItens" class="mb-3">
-                        <p class="text-muted">Nenhum item adicionado ainda.</p>
-                    </div>
-
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#modalAdicionarItem">
-                        + Adicionar Item
-                    </button>
-                </fieldset>
-
-                <hr>
-
-                <div class="d-flex justify-content-end mt-4">
-                    <button type="button" class="btn btn-secondary me-2">Cancelar</button>
-                    <button type="submit" class="btn btn-primary btn-lg">Registrar Doação</button>
                 </div>
-            </form>
-        </div>
+                <div class="mt-3">
+                    <label for="observacoes" class="form-label">Observações (opcional)</label>
+                    <textarea class="form-control" id="observacoes" name="observacoes" rows="2"></textarea>
+                </div>
+            </fieldset>
 
-        <div class="modal fade" id="modalAdicionarItem" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalLabel">Adicionar Novo Item</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="formItem">
-                            <div class="mb-3">
-                                <label for="itemDescricao" class="form-label">Descrição do Item</label>
-                                <input type="text" class="form-control" id="itemDescricao" required>
+            <fieldset class="border p-3">
+                <legend class="float-none w-auto px-2">Itens da Coleta</legend>
+                <div id="listaItens" class="mb-3">
+                    <p class="text-muted">Nenhum item adicionado ainda.</p>
+                </div>
+                <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#modalAdicionarItem">
+                    + Adicionar Item
+                </button>
+            </fieldset>
+
+            <hr>
+
+            <div class="d-flex justify-content-end mt-4">
+                <a href="index.html" class="btn btn-secondary me-2">Cancelar</a>
+                <button type="submit" class="btn btn-primary btn-lg">Registrar Coleta</button>
+            </div>
+        </form>
+    </main>
+
+    <div class="modal fade" id="modalAdicionarItem" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLabel">Adicionar Novo Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formItem">
+                        <div class="mb-3"><label for="itemDescricao" class="form-label">Descrição do Item</label><input
+                                type="text" class="form-control" id="itemDescricao" required></div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3"><label for="itemQuantidade"
+                                        class="form-label">Quantidade</label><input type="number" step="0.01"
+                                        class="form-control" id="itemQuantidade" required></div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="itemQuantidade" class="form-label">Quantidade</label>
-                                        <input type="number" step="0.01" class="form-control" id="itemQuantidade"
-                                            required>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="mb-3">
-                                        <label for="itemUnidade" class="form-label">Unidade</label>
-                                        <input type="text" class="form-control" id="itemUnidade"
-                                            placeholder="kg, L, un, pacote">
-                                    </div>
-                                </div>
+                            <div class="col">
+                                <div class="mb-3"><label for="itemUnidade" class="form-label">Unidade</label><input
+                                        type="text" class="form-control" id="itemUnidade"
+                                        placeholder="kg, L, un, pacote"></div>
                             </div>
-                            <div class="mb-3">
-                                <label for="itemValidade" class="form-label">Data de Validade (opcional)</label>
-                                <input type="date" class="form-control" id="itemValidade">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary" id="btnSalvarItem">Salvar Item</button>
-                    </div>
+                        </div>
+                        <div class="mb-3"><label for="itemValidade" class="form-label">Data de Validade (opcional)
+                                </slabel><input type="date" class="form-control" id="itemValidade"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="btnSalvarItem">Salvar Item</button>
                 </div>
             </div>
         </div>
-    </main>
-    
+    </div>
+
     <script src="assets/js/registro-doacao.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <footer class="bg-dark text-white text-center p-3">
-        <p class="mb-0">&copy; 2025 Sistema Banco de Alimentos. Todos os direitos reservados.</p>
+    <footer class="bg-dark text-white text-center p-3 mt-auto">
+        <p class="mb-0">&copy; 2025 Sesc - Administração Nacional. Todos os direitos reservados.</p>
     </footer>
 
 </body>

@@ -7,7 +7,7 @@
     <title>Banco de Alimentos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -16,8 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">
-                <i class="bi bi-bank"></i>
-                Banco de Alimentos
+                <img src="assets/img/logo.png" alt="Logo Sesc Mesa Brasil" height="45">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,8 +33,8 @@
                             Cadastros
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="cadastro-doador.html">Cadastrar Doador</a></li>
-                            <li><a class="dropdown-item" href="cadastro-instituicao.html">Cadastrar Instituição</a></li>
+                            <li><a class="dropdown-item" href="cadastro-doador.html">Cadastrar Doador/Parceiro</a></li>
+                            <li><a class="dropdown-item" href="cadastro-instituicao.html">Cadastrar Instituição Social</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -53,29 +52,29 @@
     </nav>
 
     <main class="container mt-4">
-        <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="p-5 mb-4 rounded-3 jumbotron-sesc">
             <div class="container-fluid py-5">
-                <h1 class="display-5 fw-bold">Sistema de Gestão do Banco de Alimentos</h1>
+                <h1 class="display-5 fw-bold">Sistema de Gestão - Mesa Brasil Sesc</h1>
                 <p class="col-md-10 fs-4">
-                    Nossa missão é otimizar o recebimento, o controle de estoque e a distribuição de doações
-                    de alimentos.Este sistema foi criado para conectar doadores a quem mais
-                    precisa com eficiência, transparência e agilidade, reduzindo o desperdício e o trabalho manual com
-                    planilhas. Junte-se a nós nessa causa nobre!
+                    Seja bem-vindo à ferramenta de gestão do Mesa Brasil, a maior rede de bancos de alimentos da América
+                    Latina. Nossa missão é atuar como uma ponte que conecta doadores a instituições sociais,
+                    combatendo a fome e o desperdício de alimentos e promovendo a segurança alimentar e nutricional.
                 </p>
-                <a href="registro-doacao.html" class="btn btn-primary btn-lg" type="button">Começar a registrar</a>
+                <a href="registro-doacao.html" class="btn btn-primary btn-lg" type="button">Registrar nova coleta</a>
             </div>
         </div>
 
         <div class="row text-center">
-            <h2 class="mb-4">Ações Rápidas</h2>
+            <h2 class="mb-4">Ações Principais</h2>
 
             <div class="col-md-4 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <i class="bi bi-box2-heart-fill fs-1 text-success"></i>
-                        <h5 class="card-title mt-3">Registrar Doações</h5>
-                        <p class="card-text">Cadastre novas doações recebidas, detalhando os itens, lotes e validades.</p>
-                        <a href="registro-doacao.html" class="btn btn-success">Acessar</a>
+                        <i class="bi bi-box2-heart-fill fs-1"></i>
+                        <h5 class="card-title mt-3">Registrar Coletas</h5>
+                        <p class="card-text">Cadastre as doações coletadas, detalhando os itens, validades e parceiros.
+                        </p>
+                        <a href="registro-doacao.html" class="btn btn-outline-secondary">Acessar</a>
                     </div>
                 </div>
             </div>
@@ -83,10 +82,11 @@
             <div class="col-md-4 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <i class="bi bi-person-plus-fill fs-1 text-primary"></i>
-                        <h5 class="card-title mt-3">Cadastrar Doadores</h5>
-                        <p class="card-text">Adicione novos doadores (pessoas físicas ou jurídicas) à nossa base de dados.</p>
-                        <a href="cadastro-doador.html" class="btn btn-primary">Acessar</a>
+                        <i class="bi bi-person-plus-fill fs-1"></i>
+                        <h5 class="card-title mt-3">Cadastrar Parceiros</h5>
+                        <p class="card-text">Adicione novas empresas parceiras, produtores rurais e outros doadores à
+                            nossa rede.</p>
+                        <a href="cadastro-doador.html" class="btn btn-outline-secondary">Acessar</a>
                     </div>
                 </div>
             </div>
@@ -94,10 +94,11 @@
             <div class="col-md-4 mb-3">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <i class="bi bi-building-add fs-1 text-warning"></i>
+                        <i class="bi bi-building-add fs-1"></i>
                         <h5 class="card-title mt-3">Cadastrar Instituições</h5>
-                        <p class="card-text">Registre novas ONGs, igrejas e outras entidades que receberão as doações.</p>
-                        <a href="cadastro-instituicao.html" class="btn btn-warning">Acessar</a>
+                        <p class="card-text">Registre novas instituições sociais (creches, asilos, etc.) que receberão
+                            os alimentos.</p>
+                        <a href="cadastro-instituicao.html" class="btn btn-outline-secondary">Acessar</a>
                     </div>
                 </div>
             </div>
@@ -105,7 +106,7 @@
     </main>
 
     <footer class="bg-dark text-white text-center p-3 mt-auto">
-        <p class="mb-0">&copy; 2025 Sistema Banco de Alimentos. Todos os direitos reservados.</p>
+        <p class="mb-0">&copy; 2025 Sesc - Administração Nacional. Todos os direitos reservados.</p>
     </footer>
 
 </body>

@@ -7,3 +7,38 @@ body {
 main {
     flex: 1;
 }
+
+:root {
+    --sesc-orange: #f58220;
+    --sesc-yellow: #fecb00;
+    --sesc-dark: #333333;
+}
+
+
+.navbar-dark.bg-dark {
+    background-color: var(--sesc-dark) !important;
+}
+
+
+.btn-primary {
+    background-color: var(--sesc-orange);
+    border-color: var(--sesc-orange);
+}
+
+.btn-primary:hover {
+    background-color: #d16c16;
+    
+    border-color: #d16c16;
+}
+
+
+.jumbotron-sesc {
+    background-color: #f8f9fa;
+    border-left: 5px solid var(--sesc-orange);
+}
+
+
+.card .bi {
+    color: var(--sesc-orange);
+}
+
