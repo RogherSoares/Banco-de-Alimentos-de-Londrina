@@ -18,14 +18,23 @@ document.addEventListener('DOMContentLoaded', function() {
             dadosDoador[key] = value;
         });
 
-        // --- SIMULAÇÃO DO ENVIO PARA A API ---
-        console.log('Dados que seriam enviados para a API (/api/doadores):');
-        console.log(JSON.stringify(dadosDoador, null, 2));
-
-        // Feedback para o usuário
-        alert('Doador cadastrado com sucesso! (Simulação)\nVerifique o console (F12) para ver os dados.');
-
-        // Limpa o formulário após o envio
-        formDoador.reset();
+        // Envia para a API backend
+        fetch('/api/doadores', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosDoador)
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Erro ao cadastrar doador');
+            return res.json();
+        })
+        .then(data => {
+            alert('Doador cadastrado com sucesso!');
+            formDoador.reset();
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Erro ao cadastrar doador. Veja o console para mais detalhes.');
+        });
     });
 });
