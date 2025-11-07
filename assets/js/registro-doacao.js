@@ -20,18 +20,21 @@ document.addEventListener('DOMContentLoaded', function () {
      * Simula o carregamento de doadores de uma API e preenche o select.
      */
     const carregarDoadores = async () => {
-        const mockDoadores = [
-            { id: 1, nome: 'João da Silva (CPF)' },
-            { id: 2, nome: 'Supermercado Confiança (CNPJ)' },
-            { id: 3, nome: 'Maria Oliveira (CPF)' }
-        ];
-        selectDoador.innerHTML = '<option value="">Selecione um doador</option>';
-        mockDoadores.forEach(doador => {
-            const option = document.createElement('option');
-            option.value = doador.id;
-            option.textContent = doador.nome;
-            selectDoador.appendChild(option);
-        });
+        try {
+            const res = await fetch('/api/doadores');
+            if (!res.ok) throw new Error('Erro ao carregar doadores');
+            const doadores = await res.json();
+            selectDoador.innerHTML = '<option value="">Selecione um doador</option>';
+            doadores.forEach(doador => {
+                const option = document.createElement('option');
+                option.value = doador.id;
+                option.textContent = doador.nome;
+                selectDoador.appendChild(option);
+            });
+        } catch (err) {
+            console.error(err);
+            selectDoador.innerHTML = '<option value="">Erro ao carregar doadores</option>';
+        }
     };
 
     /**
@@ -124,13 +127,26 @@ document.addEventListener('DOMContentLoaded', function () {
             itens: itensDaDoacao
         };
 
-        console.log('Dados completos da doação a serem enviados para a API:');
-        console.log(JSON.stringify(dadosDoacao, null, 2));
-        
-        alert('Doação registrada com sucesso!');
-        formDoacao.reset();
-        itensDaDoacao = []; // Limpa o array
-        renderizarItens();  // Limpa a lista da tela
+        // Envia para a API
+        fetch('/api/doacoes', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosDoacao)
+        })
+        .then(res => {
+            if (!res.ok) return res.json().then(x => { throw new Error(x.error || 'Erro'); });
+            return res.json();
+        })
+        .then(data => {
+            alert('Doação registrada com sucesso!');
+            formDoacao.reset();
+            itensDaDoacao = []; // Limpa o array
+            renderizarItens();  // Limpa a lista da tela
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Erro ao registrar doação. Veja o console para mais detalhes.');
+        });
     });
 
     listaItensDiv.addEventListener('click', (event) => {
