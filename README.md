@@ -18,7 +18,6 @@ Sistema completo para gestão de **coletas (entradas)**, **distribuições (saí
 - [Scripts NPM](#scripts-npm)
 - [Boas Práticas e Tratamento de Erros](#boas-práticas-e-tratamento-de-erros)
 - [Roadmap (Sugestões de Evolução)](#roadmap-sugestões-de-evolução)
-- [Licença](#licença)
 
 ---
 
