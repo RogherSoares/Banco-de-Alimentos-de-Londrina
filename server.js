@@ -205,21 +205,46 @@ app.post('/api/doacoes', async (req, res) => {
 
 app.get('/api/estoque', async (req, res) => {
   try {
-    const [rows] = await pool.query(`
-      SELECT
-        it.descricao,
-        it.unidade,
-        SUM(it.quantidade) AS quantidade_total,
-        MIN(it.validade) AS proximo_vencimento
-      FROM itens_doacao it
-      JOIN doacoes d ON d.id = it.id_doacao
-      GROUP BY it.descricao, it.unidade
-      ORDER BY (MIN(it.validade) IS NULL), MIN(it.validade) ASC, it.descricao ASC
-    `);
+    const qDesc = req.query.descricao ? `%${req.query.descricao.trim()}%` : '%';
+    const unidade = req.query.unidade ? req.query.unidade.trim() : null;
+    const venc = req.query.venc ? req.query.venc.trim() : null; // 'expired' or number of days
+
+    // Base: agrega por descrição/unidade e retorna menor validade (próximo vencimento)
+    let sql = `SELECT descricao,
+                      COALESCE(unidade,'') AS unidade,
+                      SUM(quantidade) AS quantidade_total,
+                      MIN(validade) AS proximo_vencimento
+               FROM itens_doacao
+               WHERE quantidade > 0 AND descricao LIKE ?`;
+    const params = [qDesc];
+
+    if (unidade) {
+      sql += ' AND unidade = ?';
+      params.push(unidade);
+    }
+
+    sql += ' GROUP BY descricao, unidade';
+
+    // HAVING para filtro por vencimento (usa MIN(validade))
+    if (venc) {
+      if (venc === 'expired') {
+        sql += ' HAVING MIN(validade) IS NOT NULL AND MIN(validade) < CURDATE()';
+      } else {
+        const n = Number(venc);
+        if (!Number.isNaN(n)) {
+          sql += ' HAVING MIN(validade) IS NOT NULL AND DATEDIFF(MIN(validade), CURDATE()) <= ?';
+          params.push(n);
+        }
+      }
+    }
+
+    sql += ' ORDER BY descricao';
+
+    const [rows] = await pool.query(sql, params);
     res.json(rows);
   } catch (err) {
-    console.error('/api/estoque GET error:', err && err.stack ? err.stack : err);
-    res.status(500).json({ error: err.message });
+    console.error('/api/estoque error:', err && err.stack ? err.stack : err);
+    res.status(500).json({ error: err.message || String(err) });
   }
 });
 
