@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname)));
 
 // simple request logger
@@ -114,25 +115,54 @@ const pool = mysql.createPool({
 // Routes
 app.get('/api/doadores', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT id, nome FROM doadores ORDER BY id DESC');
+    const q = req.query.search ? `%${req.query.search.trim()}%` : '%';
+    const sql = `SELECT id, nome, telefone, email, COALESCE(endereco,'') AS endereco, COALESCE(observacoes,'') AS observacoes
+                 FROM doadores
+                 WHERE nome LIKE ? OR email LIKE ? OR telefone LIKE ?
+                 ORDER BY nome`;
+    const params = [q, q, q];
+    const [rows] = await pool.query(sql, params);
     res.json(rows);
   } catch (err) {
-    console.error('/api/doadores error:', err && err.stack ? err.stack : err);
-    res.status(500).json({ error: err.message });
+    console.error('/api/doadores GET error', err);
+    res.status(500).json({ error: err.message || String(err) });
   }
 });
 
 app.post('/api/doadores', async (req, res) => {
   try {
-    const { nome, documento, telefone, email, endereco } = req.body;
+    const { nome, telefone, email, endereco, observacoes } = req.body;
+    if (!nome || !nome.trim()) return res.status(400).json({ error: 'nome é obrigatório' });
+
     const [result] = await pool.execute(
-      'INSERT INTO doadores (nome, documento, telefone, email, endereco) VALUES (?, ?, ?, ?, ?)',
-      [nome, documento || null, telefone || null, email || null, endereco || null]
+      `INSERT INTO doadores (nome, telefone, email, endereco, observacoes)
+       VALUES (?, ?, ?, ?, ?)`,
+      [nome.trim(), telefone || null, email || null, endereco || null, observacoes || null]
     );
-    res.json({ id: result.insertId });
+
+    const insertId = result.insertId;
+    const [rows] = await pool.query('SELECT id, nome, telefone, email, endereco, observacoes FROM doadores WHERE id = ?', [insertId]);
+    res.status(201).json(rows[0] || { id: insertId });
   } catch (err) {
-    console.error('/api/doadores POST error:', err && err.stack ? err.stack : err);
-    res.status(500).json({ error: err.message });
+    console.error('/api/doadores POST error', err);
+    res.status(500).json({ error: err.message || String(err) });
+  }
+});
+
+// PUT update
+app.put('/api/doadores/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!id) return res.status(400).json({ error: 'id inválido' });
+    const { nome, telefone, email, endereco, observacoes } = req.body;
+    await pool.execute(
+      `UPDATE doadores SET nome = ?, telefone = ?, email = ?, endereco = ?, observacoes = ? WHERE id = ?`,
+      [nome || null, telefone || null, email || null, endereco || null, observacoes || null, id]
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('/api/doadores PUT error', err);
+    res.status(500).json({ error: err.message || String(err) });
   }
 });
 
