@@ -2,6 +2,80 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.sidebar {
+  width: 240px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 1rem;
+  overflow-y: auto;
+  z-index: 1040;
+  overflow-x: hidden;
+}
+
+
+.sidebar img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+
+.sidebar-header img {
+  margin: 0;
+  height: 36px; 
+}
+
+.sidebar-header strong {
+  display: block;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+
+.content {
+  margin-left: 240px;
+  padding-top: 1rem;
+  width: calc(100% - 240px);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform .25s ease-in-out;
+    width: 220px;
+    position: fixed;
+  }
+  .sidebar.show { transform: translateX(0); position: fixed; }
+  .content {
+    margin-left: 0;
+    padding-top: 0.5rem;
+    width: 100%;
+  }
+  header.d-md-none { position: sticky; top: 0; z-index: 1030; }
 }
 
 main {
