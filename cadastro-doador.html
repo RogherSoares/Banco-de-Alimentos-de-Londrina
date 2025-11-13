@@ -12,51 +12,75 @@
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">
-                <img src="assets/img/logo.png" alt="Logo Sesc Mesa Brasil" height="45">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">
-                          <i class="bi bi-house-door-fill me-1"></i>Início
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class="bi bi-people-fill me-1"></i>Cadastros
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="cadastro-doador.html"><i class="bi bi-person-plus me-2"></i>Cadastrar Doador/Parceiro</a></li>
-                            <li><a class="dropdown-item" href="cadastro-instituicao.html"><i class="bi bi-building me-2"></i>Cadastrar Instituição Social</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registro-doacao.html"><i class="bi bi-box-arrow-in-down me-1"></i>Registrar Doação</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="registro-saida.html"><i class="bi bi-truck me-1"></i>Registrar Saída</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="estoque.html"><i class="bi bi-stack me-1"></i>Estoque</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="relatorios.html"><i class="bi bi-file-earmark-text me-1"></i>Relatórios</a>
-                    </li>
-                </ul>
-            </div>
+    <aside id="sidebar" class="sidebar bg-dark text-white">
+        <div class="sidebar-header d-flex flex-column align-items-center px-3 mb-3">
+            <img src="assets/img/logo.png" alt="Logo" height="36" class="mb-1">
+            <strong>Banco de Alimentos</strong>
+            <button id="btnSidebarClose" class="btn btn-sm btn-close btn-close-white mt-2 d-md-none"
+                aria-label="Fechar sidebar"></button>
         </div>
-    </nav>
 
-    <main class="container mt-5">
+        <nav class="nav flex-column px-2">
+            <a class="nav-link text-white" href="index.html"><i class="bi bi-house-door-fill me-2"></i>Início</a>
+
+            <div id="sidebarAccordion" class="accordion">
+                <div class="accordion-item bg-dark border-0">
+                    <h2 class="accordion-header" id="headingCadastros">
+                        <button class="accordion-button collapsed bg-dark text-white ps-2" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseCadastros" aria-expanded="false"
+                            aria-controls="collapseCadastros">
+                            <i class="bi bi-people-fill me-2"></i>Cadastros
+                        </button>
+                    </h2>
+                    <div id="collapseCadastros" class="accordion-collapse collapse" aria-labelledby="headingCadastros"
+                        data-bs-parent="#sidebarAccordion">
+                        <div class="accordion-body p-0">
+                            <nav class="nav flex-column ms-3">
+                                <a class="nav-link text-white" href="cadastro-doador.html"><i
+                                        class="bi bi-person-plus me-2"></i>Cadastrar Doador</a>
+                                <a class="nav-link text-white" href="cadastro-instituicao.html"><i
+                                        class="bi bi-building me-2"></i>Cadastrar Instituição</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item bg-dark border-0">
+                    <h2 class="accordion-header" id="headingMovimentos">
+                        <button class="accordion-button collapsed bg-dark text-white ps-2" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseMovimentos" aria-expanded="false"
+                            aria-controls="collapseMovimentos">
+                            <i class="bi bi-arrow-left-right me-2"></i>Entrada / Saída
+                        </button>
+                    </h2>
+                    <div id="collapseMovimentos" class="accordion-collapse collapse" aria-labelledby="headingMovimentos"
+                        data-bs-parent="#sidebarAccordion">
+                        <div class="accordion-body p-0">
+                            <nav class="nav flex-column ms-3">
+                                <a class="nav-link text-white" href="registro-doacao.html"><i
+                                        class="bi bi-box-arrow-in-down me-2"></i>Registrar Entrada</a>
+                                <a class="nav-link text-white" href="registro-saida.html"><i
+                                        class="bi bi-truck me-2"></i>Registrar Saída</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a class="nav-link text-white" href="estoque.html"><i class="bi bi-stack me-2"></i>Estoque</a>
+            <a class="nav-link text-white" href="relatorios.html"><i
+                    class="bi bi-file-earmark-text me-2"></i>Relatórios</a>
+        </nav>
+    </aside>
+
+    <!-- Mobile top bar -->
+    <header class="d-md-none bg-dark text-white py-2 px-3 d-flex align-items-center">
+        <button id="btnSidebarToggle" class="btn btn-outline-light btn-sm me-2"><i class="bi bi-list"></i></button>
+        <div class="fw-bold">Banco de Alimentos</div>
+    </header>
+
+    <!-- Main content area (use .content to account for sidebar) -->
+    <main class="content container mt-4">
         <h2><i class="bi bi-person-plus-fill"></i> Cadastro de Parceiro (Doador)</h2>
         <p>Preencha os dados abaixo para registrar um novo parceiro doador (empresa, produtor rural, etc.).</p>
 
@@ -109,12 +133,20 @@
         </form>
     </main>
 
-    <script src="assets/js/cadastro-doador.js"></script>
-
     <footer class="bg-dark text-white text-center p-3 mt-auto">
-        <p class="mb-0">&copy; 2025 Sesc - Administração Nacional. Todos os direitos reservados.</p>
+        <p class="mb-0">&copy; 2025 Sesc - Administração Nacional.</p>
     </footer>
 
+    <script>
+        (function () {
+            const btnToggle = document.getElementById('btnSidebarToggle');
+            const sidebar = document.getElementById('sidebar');
+            const btnClose = document.getElementById('btnSidebarClose');
+            if (btnToggle) btnToggle.addEventListener('click', () => sidebar.classList.toggle('show'));
+            if (btnClose) btnClose.addEventListener('click', () => sidebar.classList.remove('show'));
+            sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { if (window.innerWidth < 768) sidebar.classList.remove('show'); }));
+        })();
+    </script>
 </body>
 
 </html>
