@@ -166,34 +166,61 @@ app.put('/api/doadores/:id', async (req, res) => {
   }
 });
 
-// Add GET list route for instituicoes (debug)
+// GET lista instituições — ajustado para não usar `nome` como fallback para razao_social,
+// mas permitir usar `nome` como fallback para responsavel (caso dados antigos tenham responsavel em `nome`)
 app.get('/api/instituicoes', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM instituicoes ORDER BY id DESC');
+    const q = req.query.search ? `%${req.query.search.trim()}%` : '%';
+    const sql = `SELECT
+                   id,
+                   COALESCE(razao_social, '') AS razao_social,
+                   COALESCE(responsavel, nome, '') AS responsavel,
+                   contato, telefone, email, COALESCE(endereco,'') AS endereco,
+                   COALESCE(observacoes,'') AS observacoes
+                 FROM instituicoes
+                 WHERE razao_social LIKE ? OR responsavel LIKE ? OR contato LIKE ? OR email LIKE ? OR telefone LIKE ?
+                 ORDER BY razao_social`;
+    const params = [q, q, q, q, q];
+    const [rows] = await pool.query(sql, params);
     res.json(rows);
   } catch (err) {
-    console.error('/api/instituicoes GET error:', err && err.stack ? err.stack : err);
-    res.status(500).json({ error: err.message });
+    console.error('/api/instituicoes GET error', err);
+    res.status(500).json({ error: err.message || String(err) });
   }
 });
 
-// Ensure POST logs insert result
+// PUT update instituição
+app.put('/api/instituicoes/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!id) return res.status(400).json({ error: 'id inválido' });
+    const { nome, contato, telefone, email, endereco, observacoes } = req.body;
+    await pool.execute(
+      `UPDATE instituicoes SET nome = ?, contato = ?, telefone = ?, email = ?, endereco = ?, observacoes = ? WHERE id = ?`,
+      [nome || null, contato || null, telefone || null, email || null, endereco || null, observacoes || null, id]
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('/api/instituicoes PUT error', err);
+    res.status(500).json({ error: err.message || String(err) });
+  }
+});
+
+// POST create instituição (opcional, se quiser permitir criação via JSON)
 app.post('/api/instituicoes', async (req, res) => {
   try {
-    console.log('/api/instituicoes body:', req.body);
-    const { nome, razao_social, cnpj, telefone, endereco } = req.body || {};
-    if (!nome || !nome.trim()) return res.status(400).json({ error: 'Campo "nome" é obrigatório.' });
-
+    const { nome, contato, telefone, email, endereco, observacoes } = req.body;
+    if (!nome || !nome.trim()) return res.status(400).json({ error: 'nome é obrigatório' });
     const [result] = await pool.execute(
-      'INSERT INTO instituicoes (nome, razao_social, cnpj, telefone, endereco) VALUES (?, ?, ?, ?, ?)',
-      [nome.trim(), razao_social || null, cnpj || null, telefone || null, endereco || null]
+      `INSERT INTO instituicoes (nome, contato, telefone, email, endereco, observacoes)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [nome.trim(), contato || null, telefone || null, email || null, endereco || null, observacoes || null]
     );
-
-    console.log('/api/instituicoes insert result:', result);
-    res.json({ id: result.insertId, affectedRows: result.affectedRows });
+    const [rows] = await pool.query('SELECT id, nome, contato, telefone, email, endereco, observacoes FROM instituicoes WHERE id = ?', [result.insertId]);
+    res.status(201).json(rows[0] || { id: result.insertId });
   } catch (err) {
-    console.error('/api/instituicoes POST error:', err && err.stack ? err.stack : err);
-    res.status(500).json({ error: err.message });
+    console.error('/api/instituicoes POST error', err);
+    res.status(500).json({ error: err.message || String(err) });
   }
 });
 
